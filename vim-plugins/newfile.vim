@@ -14,11 +14,11 @@
 " MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 " GNU General Public License for more details.
 " 
-" You should have received a copy of the GNU General Public License
-" along with this program; if not, write to the Free Software
-" Foundation, Inc., 59 Temple Place, Suite 330,
-" Boston, MA 02111-1307, USA.
-" Version: 2007-09-12 01:02:51
+" You should have received a copy of the GNU General Public License along
+" with this program; if not, write to the Free Software Foundation, Inc.,
+" 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+"
+" Version: Tue, 18 Dec 2007 09:55:16 +0800
 " Usage: this file will auto run when you create a new file.
 " But you also can run it from command, do :py newfile()
 "
@@ -51,10 +51,9 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330,
-Boston, MA 02111-1307, USA.
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 ##############################################
 
@@ -72,7 +71,7 @@ HEAD[".c"] = """/* vi: set sw=4 ts=4: */
 """
 TAIL[".c"]= """
 /*
-vi:ts=4:nowrap:ai:expandtab
+vi:ts=4:wrap:ai:expandtab
 */
 """
 
