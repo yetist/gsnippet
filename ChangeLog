@@ -1,3 +1,8 @@
+2008-01-25  yetist  <yetist@gmail.com>
+
+	* vim-plugins/gnome-code.vim: 修复在文件名中含有大于两个-字符时出现的问题。
+	* vim-plugins/README: 常用的插件列表。
+
 2007-11-06  yetist  <yetist@debian>
 
 	* vim-plugins/vimrc: 

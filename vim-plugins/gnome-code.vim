@@ -157,8 +157,8 @@ def gnomecode(parent):
     info["Cpkg"] = info["cpkg"][0].upper() + info["cpkg"][1:]
     info["CPKG"] = info["cpkg"].upper()
 
-    info["cobj"] = info["basename"].split("-")[1].lower()
-    info["Cobj"] = info["cobj"][0].upper() + info["cobj"][1:]
+    info["cobj"] = "_".join(info["basename"].split("-")[1:]).lower()
+    info["Cobj"] = "".join([i[0].upper()+i[1:].lower() for i in info["basename"].split("-")[1:]])
     info["COBJ"] = info["cobj"].upper()
 
     info["ppkg"] = parent.split("-")[0].lower()
