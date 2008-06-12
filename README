@@ -1,4 +1,49 @@
-[vim-plugins]
 ==============
-gnome-code.vim:
-newfile.vim:
+代码片断收藏
+==============
+
+:作者: yetist
+:日期: |date|
+:联系: yetist@gmail.com
+
+.. |date| date::
+
+.. --------------------------
+.. contents::
+.. --------------------------
+
+vim 插件
+==========
+
+插件
+-----
+
+* `gnome-code.vim <vim-plugins/gnome-code.vim>`__ 自动生成基于GObject的类。
+* `changelog.vim <vim-plugins/changelog.vim>`__ 使用svn时，自动生成新的ChangeLog文件模板
+* `newfile.vim <vim-plugins/newfile.vim>`__ 自动生成新文件模板
+* `vimrc <vim-plugins/vimrc>`__ 我的.vim配置文件
+* `a.vim <http://www.vim.org/scripts/script.php?script_id=31>`__ 快速切换源/头文件
+* `devhelp.vim <vim-plugins/devhelp.vim>`__ devhelp插件
+* `fencview.vim <http://www.vim.org/scripts/script.php?script_id=1708>`__ 自动检测并使用合适的编码
+* `sketch.vim <http://www.vim.org/scripts/script.php?script_id=705>`__ 使用鼠标划线、图
+* `taglist.vim <http://www.vim.org/scripts/script.php?script_id=273>`__ 源代码浏览工具
+
+表达式
+-------
+
+* `gtk-vim-syntax <http://www.vim.org/scripts/script.php?script_id=1000>`__ Syntax highlighting for GLib, Gtk+, Xlib, Gimp, Gnome, and more. 
+
+
+文档
+==========
+
+reStructuredTEXT 相关
+----------------------
+
+* `reStructuredText Demonstration <http://docutils.sourceforge.net/docs/user/rst/demo.html>`__ (a
+  demonstration of most reStructuredText features; you can also have a
+  look at the `text source <http://docutils.sourceforge.net/docs/user/rst/demo.txt>`__)
+* `reStructuredTEXT 的中文教程 <docs/reStructuredTEXT.html>`__ 源文件为 `reStructuredTEXT.rst <docs/reStructuredTEXT.rst>`__ 。
+
+
+.. vim:set ft=rst
