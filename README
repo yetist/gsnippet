@@ -46,4 +46,4 @@ reStructuredTEXT 相关
 * `reStructuredTEXT 的中文教程 <docs/reStructuredTEXT.html>`__ 源文件为 `reStructuredTEXT.rst <docs/reStructuredTEXT.rst>`__ 。
 
 
-.. vim:set ft=rst
+.. vim:set ft=rst:
