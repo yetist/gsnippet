@@ -9,8 +9,8 @@
 # a text file which contains nothing but the last known good SCM revision to
 # sync against. It is fetched if specified and used unless --head is passed
 solutions = [
-  { "name"        : "googlecode_upload.py",
-    "url"         : "http://support.googlecode.com/svn/trunk/scripts/googlecode_upload.py",
+  { "name"        : "bin",
+    "url"         : "https://gsnippet.googlecode.com/svn/trunk/home-bin",
     "custom_deps" : {
       # To use the trunk of a component instead of what's in DEPS:
       #"component": "https://svnserver/component/trunk/",
