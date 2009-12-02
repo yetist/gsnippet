@@ -65,6 +65,7 @@ class MyCalendar:
         for i, a_calendar in zip(xrange(len(feed.entry)), feed.entry):
             if a_calendar.title.text == title:
                 url = a_calendar.content.src
+                #url = a_calendar.GetAlternateLink().href
         host = "http://www.google.com"
         if url.find(host) == 0:
             return url[len(host):]
@@ -98,18 +99,36 @@ class MyCalendar:
 
 def main():
     dd = _MyDate(2009,1,1)
-    buf = open("index.txt").read()
-    b = buf.split("==>")[1:]
-    lines=[]
-    for i in b:
-        lines.append(i.split("\n")[1])
+    buf = open("header.txt").read()
+    lines={}
+    ord=[]
+    for i in buf.splitlines():
+        n=i.split("#")
+        lines[n[0]] = {}
+        lines[n[0]]["title"] = n[1]
+        ord.append(n[0])
+        #lines.append(i.split("\n")[1])
 
+    buf = open("content.txt").read()
+    for i in buf.splitlines():
+        n=i.split("#")
+        lines[n[0]]["content"] = n[1]
+
+    for i in lines.keys():
+        pass
+        #print i,lines[i]
+
+    print len(ord)
+    #sys.exit(0)
     email="your@gmail.com"
     password="password"
 
     cal = MyCalendar(email, password)
-    for i in range(365):
+    for n in ord:
+        print n
         recurrence_data = ('DTSTART;VALUE=DATE:%s\r\nDTEND;VALUE=DATE:%s\r\nRRULE:FREQ=YEARLY\r\n' % (dd.day(), dd.nextday()))
-        cal.insert_event(calendar="读经伴侣", title=lines[i], content=lines[i], where='', start_time=dd.day(), end_time=dd.day(), recurrence_data=recurrence_data)
+        print lines[n]['title'], "<<<>>>",  lines[n]['content']
+        #print "cal.insert_event(calendar=\"读经伴侣\", title=",lines[n]['title'],", content=",lines[n]['content'],", where='', start_time=",dd.day(),", end_time=",dd.day(),", recurrence_data=",recurrence_data")"
+        cal.insert_event(calendar="读经伴侣", title=lines[n]['title'], content=lines[n]['content'], where='', start_time=dd.day(), end_time=dd.day(), recurrence_data=recurrence_data)
         dd.next()
 main()
