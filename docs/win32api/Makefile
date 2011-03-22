@@ -1,0 +1,2 @@
+all:
+	asciidoc start.txt
