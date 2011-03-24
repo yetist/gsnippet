@@ -15,12 +15,6 @@ Yetist个人主页
 vim 插件
 ==========
 
-.. sidebar:: sss
-   :subtitle: xxx
-
-        ssssssssssssssssss
-        oooooooooooo
-
 * `gnome-code.vim <vim-plugins/gnome-code.vim>`__ 自动生成基于GObject的类。
 * `changelog.vim <vim-plugins/changelog.vim>`__ 使用svn时，自动生成新的ChangeLog文件模板
 * `newfile.vim <vim-plugins/newfile.vim>`__ 自动生成新文件模板
