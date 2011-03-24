@@ -1,0 +1,88 @@
+/* @import url(http://rst2a.com/static/styles/html/default.css); */
+@import url(default.css);
+
+body {
+	background-color: #FFC;
+	padding: 0;
+	margin: 0;
+	margin-right: 13em;
+}
+
+h1, h2, h3, h4, h5, h6 {               
+	font-family: serif;
+}
+
+div.document {
+	padding-top: 1.5em;
+	padding-bottom: 2em;
+}
+
+div.document, div.footer {
+	margin: 0;
+	max-width: 40em;
+	padding-left: 2em;
+	padding-right: 1em;
+}
+
+h1.title {
+	text-align: left;
+	border-bottom: 0.1em solid black;
+	padding-bottom: 0.2em;
+}
+
+table.docinfo {
+	background-color: #CCA;
+	padding: 0.5em 1em;
+	margin: 1.5em;
+}
+
+div.section div.section {
+	padding-left: 2em;
+}
+
+div.example {
+	font-size: 90%;
+	padding-left: 1.5em;
+	padding-right: 1em;
+	font-style: italic;
+	background-color: #E8E8A4;
+}
+
+div.example ul {
+	text-indent: 0;
+}
+
+div.topic {
+	border: 3px outset black;
+	padding: 10px;
+}
+
+hr.footer {
+	border: 1px solid black;
+}
+
+div.contents {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 11em;
+	padding: 1em 1em 1em 0.5em;
+	margin: 0;
+	border: 0;
+	border-left: 2px solid black;
+	height: 100%;
+}
+
+div.contents ul {
+	list-style: none;
+	padding-left: 1em;
+	font-size: 0.9em;
+}
+
+div.contents li ul {
+	display: none;
+}
+
+div.contents li:hover > ul {
+	display: block;
+}

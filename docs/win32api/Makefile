@@ -1,2 +1,0 @@
-all:
-	asciidoc start.txt

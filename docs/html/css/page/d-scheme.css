@@ -1,0 +1,96 @@
+/
+  :Author: Daniel Hengeveld 
+  :Contact: danielwh@gmail.com 
+  :Copyright: This stylesheet has been placed in the public domain.
+ 
+  D-Scheme v0.1 - Stylesheet for use with Docutils. Especially nice if you have a TOC.
+  */
+
+/* @import url(http://rst2a.com/static/styles/html/default.css); */
+@import url(default.css);
+
+/* attention, warning, etc. styles taken from voidspace */
+div.attention, div.caution, div.danger, div.error, div.hint,
+div.important, div.note, div.tip, div.warning {
+  background-color: #cccccc;
+  padding: 3px;
+  width: 80%;
+}
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title  {
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: #cc0000;
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #999999;
+  display: block;
+  margin: 0;
+}
+
+body {
+  background-color: #efefef;
+  font-family: Frutiger, Univers, Verdana, "Bitstream Vera Sans", sans-serif;
+}
+
+div.document {
+  width: 800px;
+  border: 1px dotted black;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom:10px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+}
+
+a {
+  color: #660000;
+}
+
+h1, h1.a {
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
+h1.title {
+  text-transform: uppercase;
+  font-size: 200%;
+  margin-bottom: 30px;
+  border-bottom: 5px dashed;
+  border-top: 5px dashed;
+}
+
+div.section {
+  border-top: 1px dashed black;
+}
+
+div.contents {
+  width: 40%;
+  float: right;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px;
+  border: 1px dashed;
+  background-color: #efefef;
+}
+
+
+a:link, a:visited {
+  text-decoration: none;
+  border-bottom: 1px dotted;
+}
+
+a:hover, a:active {
+  text-decoration: none;
+  border-bottom: 1px solid;
+}
