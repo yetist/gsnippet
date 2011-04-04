@@ -170,8 +170,20 @@ fun SetupVAM()
   " There should be no exception anyway
   " try
   call vam#ActivateAddons([
-			  \ 'icalendar',
-			  \ 'a.vim_-_Alternate_Files_quickly_.c'
+			  \ 'a.vim_-_Alternate_Files_quickly_.c',
+			  \ 'calendar52',
+			  \ 'devhelp',
+			  \ 'FencView',
+			  \ 'gnome-code',
+			  \ 'gnome-doc',
+			  \ 'gobgen',
+			  \ 'newfile',
+			  \ 'po695',
+			  \ 'RST_Tables',
+			  \ 'scm-changelog',
+			  \ 'sketch',
+			  \ 'taglist',
+			  \ 'VimIM_-_Vim_Input_Method'
 			  \ ])
   " catch /.*/
   " echoe v:exception
