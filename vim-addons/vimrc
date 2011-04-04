@@ -183,7 +183,7 @@ fun SetupVAM()
 			  \ 'scm-changelog',
 			  \ 'sketch',
 			  \ 'taglist',
-			  \ 'VimIM_-_Vim_Input_Method'
+			  \ 'vimim'
 			  \ ])
   " catch /.*/
   " echoe v:exception
@@ -201,3 +201,4 @@ let g:vim_addon_manager['plugin_sources']['scm-changelog'] = {"type":"svn", "url
 let g:vim_addon_manager['plugin_sources']['gnome-code'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/gnome-code"}
 let g:vim_addon_manager['plugin_sources']['devhelp'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/devhelp"}
 let g:vim_addon_manager['plugin_sources']['rpmgroups'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/rpmgroups"}
+let g:vim_addon_manager['plugin_sources']['vimim'] = {"type":"svn", "url":"http://vimim.googlecode.com/svn/trunk"}
