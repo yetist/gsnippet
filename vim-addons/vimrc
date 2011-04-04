@@ -1,191 +1,191 @@
-" vim:shiftwidth=2:tabstop=8:expandtab
+set nocompatible 
+                                
+"设定文件编码类型，彻底解决中文编码问题
+scriptencoding utf-8
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,chinese,taiwan,latin1
+set fileencoding=utf-8
+let &termencoding = &encoding
 
-if has('autocmd')
-  " Remove ALL autocommands for the current group
-  au!
+"加载常用插件
+source $VIMRUNTIME/ftplugin/man.vim             "在vim中看man
 
-  " Mark .asm files MASM-type assembly
-  au BufNewFile,BufReadPre *.asm let b:asmsyntax='masm'
+filetype plugin indent on
+
+set backspace=2                                 "影响退格键的工作
+"set columns=80                                  "设置屏幕的列数
+set history=80                                  "历史
+set ruler                                       "在右下角显示行列数
+set incsearch                                   "匹配搜索关键字
+set clipboard+=unnamed
+set mouse=					"关闭鼠标支持
+set nolbr					"关闭整词折行,否则中文很难看
+set nobackup					"关闭备份
+"set nowritebackup				"关闭备份
+
+" 自动跳到上次打开的位置。
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal g'\"" | endif
+    augroup python
+        autocmd BufReadPre,FileReadPre *.py set tabstop=4
+        autocmd BufReadPre,FileReadPre *.py set shiftwidth=4
+        autocmd BufReadPre,FileReadPre *.py set expandtab
+        autocmd filetype python set tabstop=4
+        autocmd filetype python set shiftwidth=4
+        autocmd filetype python set expandtab
+    augroup END
+    augroup vala
+	autocmd BufRead *.vala set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+	autocmd BufRead *.vapi set efm=%f:%l.%c-%[%^:]%#:\ %t%[%^:]%#:\ %m
+	au BufRead,BufNewFile *.vala            setfiletype vala
+	au BufRead,BufNewFile *.vapi            setfiletype vala
+    augroup END
 endif
 
-if has('gui_running')
-  let do_syntax_sel_menu=1
-endif
+"设置自动对齐
+set cindent
+set backspace=indent,eol,start
 
-if has('gui_running') && $LANG !~ '\.'
-  set encoding=utf-8
-endif
-
-set nocompatible
-source $VIMRUNTIME/vimrc_example.vim
-
-set autoindent
-set nobackup
+"辅助显示
+set showcmd 
 set showmatch
-set formatoptions+=mM
-set fileencodings=ucs-bom,utf-8,gbk
-set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %-14.(%l,%c%V%)\ %P
-if has('mouse')
-  set mouse=a
-endif
-if has('multi_byte') && v:version > 601
-  if v:lang =~? '^\(zh\)\|\(ja\)\|\(ko\)'
-    set ambiwidth=double
-  endif
-endif
+set showmode
+set wrap                                    "自动折行
+"set list
+set cmdheight=1
+"set scrollbind
+"set scrolloff=0
+set sidescroll=0 wrap linebreak
+"set whichwrap=b,s
+"set whichwrap=<,>,[,]
+set noautowrite
 
-" Key mappings to ease browsing long lines
-noremap  <C-J>       gj
-noremap  <C-K>       gk
-noremap  <Down>      gj
-noremap  <Up>        gk
-inoremap <Down> <C-O>gj
-inoremap <Up>   <C-O>gk
 
-" Key mappings for quick arithmetic inside Vim
-nnoremap <silent> <Leader>ma yypV:!calcu '<C-R>"'<CR>k$
-vnoremap <silent> <Leader>ma yo<ESC>pV:!calcu '<C-R>"'<CR>k$
-nnoremap <silent> <Leader>mr yyV:!calcu '<C-R>"'<CR>$
-vnoremap <silent> <Leader>mr ygvmaomb:r !calcu '<C-R>"'<CR>"ay$dd`bv`a"ap
+"其它设置
+set path+=/usr/include,/usr/include/sys,/usr/include/gtk-2.0/gtk,/usr/include/gtk-2.0/gdk,$HOME/include
+set tags=./tags,./../tags,./**/tags,/usr/include/tags
 
-" Key mapping to stop the search highlight
-nmap <silent> <F2>      :nohlsearch<CR>
-imap <silent> <F2> <C-O>:nohlsearch<CR>
 
-" Key mapping for the taglist.vim plugin
-nmap <F9>      :Tlist<CR>
-imap <F9> <C-O>:Tlist<CR>
-
-" Key mappings for the quickfix commands
-nmap <F11> :cn<CR>
-nmap <F12> :cp<CR>
-
-" Non-GUI setting
-if !has('gui_running')
-  " Do not increase the windows width in the taglist.vim plugin
-  if has('eval')
-    let Tlist_Inc_Winwidth=0
-  endif
-
-  " Set text-mode menu
-  if has('wildmenu')
-    set wildmenu
-    set cpoptions-=<
-    set wildcharm=<C-Z>
-    nmap <F10>      :emenu <C-Z>
-    imap <F10> <C-O>:emenu <C-Z>
-  endif
-endif
-
-if has('autocmd')
-  function! SetFileEncodings(encodings)
-    let b:my_fileencodings_bak=&fileencodings
-    let &fileencodings=a:encodings
-  endfunction
-
-  function! RestoreFileEncodings()
-    let &fileencodings=b:my_fileencodings_bak
-    unlet b:my_fileencodings_bak
-  endfunction
-
-  function! CheckFileEncoding()
-    if &modified && &fileencoding != ''
-      exec 'e! ++enc=' . &fileencoding
-    endif
-  endfunction
-
-  function! ConvertHtmlEncoding(encoding)
-    if a:encoding ==? 'gb2312'
-      return 'gbk'              " GB2312 imprecisely means GBK in HTML
-    elseif a:encoding ==? 'iso-8859-1'
-      return 'latin1'           " The canonical encoding name in Vim
-    elseif a:encoding ==? 'utf8'
-      return 'utf-8'            " Other encoding aliases should follow here
+"设置颜色
+if &t_Co > 2 || has("gui_running")
+    syntax on                                   "开启语法结构强调
+    set hlsearch                                "高亮显示搜索关键字
+    if has("gui_running")
+        set background=light
     else
-      return a:encoding
+        set background=dark
     endif
-  endfunction
-
-  function! DetectHtmlEncoding()
-    if &filetype != 'html'
-      return
-    endif
-    normal m`
-    normal gg
-    if search('\c<meta http-equiv=\("\?\)Content-Type\1 content="text/html; charset=[-A-Za-z0-9_]\+">') != 0
-      let reg_bak=@"
-      normal y$
-      let charset=matchstr(@", 'text/html; charset=\zs[-A-Za-z0-9_]\+')
-      let charset=ConvertHtmlEncoding(charset)
-      normal ``
-      let @"=reg_bak
-      if &fileencodings == ''
-        let auto_encodings=',' . &encoding . ','
-      else
-        let auto_encodings=',' . &fileencodings . ','
-      endif
-      if charset !=? &fileencoding &&
-         \(auto_encodings =~ ',' . &fileencoding . ',' || &fileencoding == '')
-        silent! exec 'e ++enc=' . charset
-      endif
-    else
-      normal ``
-    endif
-  endfunction
-
-  function! GnuIndent()
-    setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
-    setlocal shiftwidth=2
-    setlocal tabstop=8
-  endfunction
-
-  function! RemoveTrailingSpace()
-    if $VIM_HATE_SPACE_ERRORS != '0' &&
-          \(&filetype == 'c' || &filetype == 'cpp' || &filetype == 'vim')
-      normal m`
-      silent! :%s/\s\+$//e
-      normal ``
-    endif
-  endfunction
-
-  " Highlight space errors in C/C++ source files (Vim tip #935)
-  if $VIM_HATE_SPACE_ERRORS != '0'
-    let c_space_errors=1
-  endif
-
-  " Use Canadian spelling convention in engspchk (Vim script #195)
-  let spchkdialect='can'
-
-  " Show syntax highlighting attributes of character under cursor (Vim
-  " script #383)
-  map <Leader>a :call SyntaxAttr()<CR>
-
-  " Automatically find scripts in the autoload directory
-  au FuncUndefined * exec 'runtime autoload/' . expand('<afile>') . '.vim'
-
-  " File type related autosetting
-  au FileType c,cpp setlocal cinoptions=:0,g0,(0,w1 shiftwidth=4 tabstop=4
-  au FileType diff  setlocal shiftwidth=4 tabstop=4
-  au FileType html  setlocal autoindent indentexpr=
-  au FileType changelog setlocal textwidth=76
-
-  " Text file encoding autodetection
-  au BufReadPre  *.gb               call SetFileEncodings('gbk')
-  au BufReadPre  *.big5             call SetFileEncodings('big5')
-  au BufReadPre  *.nfo              call SetFileEncodings('cp437')
-  au BufReadPost *.gb,*.big5,*.nfo  call RestoreFileEncodings()
-  au BufWinEnter *.txt              call CheckFileEncoding()
-
-  " Detect charset encoding in an HTML file
-  au BufReadPost *.htm* nested      call DetectHtmlEncoding()
-
-  " Recognize standard C++ headers
-  au BufEnter /usr/include/c++/*    setf cpp
-  au BufEnter /usr/include/g++-3/*  setf cpp
-
-  " Setting for files following the GNU coding standard
-  au BufEnter /usr/*                call GnuIndent()
-
-  " Remove trailing spaces for C/C++ and Vim files
-  au BufWritePre *                  call RemoveTrailingSpace()
 endif
+
+"在屏幕最下面加一行状态显示栏
+"set ai si digraph ek hid ru wmnu nosol
+set ai si ek hid ru wmnu nosol
+set fo=cqrt ls=2 "shm=atI
+set com=s1:/*,mb:*,ex:*/,://,b:#
+set vi=%,'50,\"50,:50 lcs=tab:>-,trail:.,extends:>
+
+"功能键定义
+nno <F2> :set hlsearch!<bar>set hlsearch?<CR>           
+                                                "F2高亮显示搜索结果
+nno <F3> :set nu!<bar>set nu?<CR>                       
+                                                "F3显示行号
+nno <F4> :syn clear<CR>                                 
+                                                "F4清除高亮表达式
+set pt=<F5> tm=750 nomore modelines=5           "F5可能与状态栏有关,已知在插入状态切换粘贴状态
+map <F6>   <Esc><S-$>a<TAB>/**/<Esc>2ha                 
+                                                "F6注释
+imap <F7> <ESC>:read! date +'\%Y-\%m-\%d  yetist  <yetist@gmail.com>'<CR>kJo<CR><Tab>*
+                                                "F7在文件中方便的加入ChangLog头信息
+                                                "
+nnoremap <F8> :Tlist <CR>                               
+                                                "F8函数列表
+imap <F9> <ESC>:!tcc -run %<CR>
+                                                "F9用tcc运行程序
+
+"map <home> <Esc>:call Mytitle()<CR><Esc>:$<Esc>o        
+                                                "<home>键插入C语言文件声明信息 
+"map <end> <Esc>:call Myend()<CR><Esc>:$<Esc>o           
+                                                "<end>键插入C语言文件格式化信息 
+
+nno <C-w>t :tabnew<CR>
+                                                "<Ctrl>+w,t 键打开新tab
+nmap K :Man <cword><CR>
+"set keywordprg=man\ -s
+
+map <S-F6> :exe GnomeDoc()<CR>                   "运行GnomeDoc
+"ino <Down> <C-O>gj
+"ino <Up> <C-O>gk
+"nno <Down> gj
+"nno <Up> gk
+"
+"
+"set timeoutlen=150
+
+let g:fencview_autodetect = 1
+
+"" for vim plugins: ['scm-changelog', 'newfile']
+let g:author_name="yetist"
+let g:author_email="yetist@gmail.com"
+let g:author_url="http://yetist.osprg.org"
+let g:author_blog="http://blog.osprg.org"
+
+"" for vim plugins: ['newfile']
+let g:license="gpl3"
+
+let g:packager="yetist <yetist@gmail.com>"
+
+let g:po_translator = "yetist <yetist@gmail.com>"
+let g:po_lang_team = "Chinese (simplified) <translation-team-zh-cn@lists.sourceforge.net>" 
+
+""vimim
+""
+"let g:vimim_enable_smart_space=1
+"let g:vimim_enable_dynamic_menu=1
+"let g:vimim_enable_fuzzy_search=1
+"let g:vimim_enable_fuzzy_pinyin=1
+"let g:vimim_enable_menu_label=1
+
+"
+" vala language setup
+" Disable valadoc syntax highlight
+"let vala_ignore_valadoc = 1
+
+" Enable comment strings
+let vala_comment_strings = 1
+
+" Highlight space errors
+let vala_space_errors = 1
+" Disable trailing space errors
+"let vala_no_trail_space_error = 1
+" Disable space-tab-space errors
+let vala_no_tab_space_error = 1
+
+" Minimum lines used for comment syncing (default 50)
+"let vala_minlines = 120
+
+fun SetupVAM()
+  set runtimepath+=~/.vim/addons/vim-addon-manager
+  " commenting try .. endtry because trace is lost if you use it.
+  " There should be no exception anyway
+  " try
+  call vam#ActivateAddons([
+			  \ 'icalendar',
+			  \ 'a.vim_-_Alternate_Files_quickly_.c'
+			  \ ])
+  " catch /.*/
+  " echoe v:exception
+  " endtry
+endf
+call SetupVAM()
+" experimental: run after gui has been started [3]
+" option1: au VimEnter * call SetupVAM()
+" option2: au GUIEnter * call SetupVAM()
+" See BUGS sections below [*]
+
+"" setup vim plugins:['vim-addon-manager'] for my own plugins.
+let g:vim_addon_manager['plugin_sources']['newfile'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/newfile"}
+let g:vim_addon_manager['plugin_sources']['scm-changelog'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/scm-changelog"}
+let g:vim_addon_manager['plugin_sources']['gnome-code'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/gnome-code"}
+let g:vim_addon_manager['plugin_sources']['devhelp'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/devhelp"}
+let g:vim_addon_manager['plugin_sources']['rpmgroups'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/rpmgroups"}
