@@ -12,7 +12,6 @@ source $VIMRUNTIME/ftplugin/man.vim             "在vim中看man
 
 filetype plugin indent on
 
-set backspace=2                                 "影响退格键的工作
 "set columns=80                                  "设置屏幕的列数
 set history=80                                  "历史
 set ruler                                       "在右下角显示行列数
@@ -172,6 +171,7 @@ fun SetupVAM()
   call vam#ActivateAddons([
 			  \ 'a.vim_-_Alternate_Files_quickly_.c',
 			  \ 'calendar52',
+			  \ 'Conque_Shell',
 			  \ 'devhelp',
 			  \ 'FencView',
 			  \ 'gnome-code',
@@ -202,3 +202,5 @@ let g:vim_addon_manager['plugin_sources']['gnome-code'] = {"type":"svn", "url":"
 let g:vim_addon_manager['plugin_sources']['devhelp'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/devhelp"}
 let g:vim_addon_manager['plugin_sources']['rpmgroups'] = {"type":"svn", "url":"http://gsnippet.googlecode.com/svn/trunk/vim-addons/rpmgroups"}
 let g:vim_addon_manager['plugin_sources']['vimim'] = {"type":"svn", "url":"http://vimim.googlecode.com/svn/trunk"}
+set nocp
+set backspace=2                                 "影响退格键的工作
