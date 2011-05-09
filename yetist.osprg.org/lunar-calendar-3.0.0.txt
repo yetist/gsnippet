@@ -1,0 +1,155 @@
+lunar-calendar 3.0.0 发布
+=========================
+
+lunar-calendar 是Linux上用于Gtk+的农历日历构件。
+
+原来叫liblunar-gtk，为了更好地适应Gobject Introspection来支持多种语言绑定, 故改名为lunar-calendar。
+
+目前分别针对Gtk2和Gtk3发布了2.4.1和3.0.0版本。
+
+参考手册： http://liblunar.googlecode.com/svn/docs/lunar-calendar3/index.html
+
+这两个版本都提供了以下语言绑定：
+javascript，python, vala...
+
+从源码安装：
+------------
+
+ wget http://liblunar.googlecode.com/files/lunar-calendar-3.0.0.tar.gz
+ tar xf lunar-calendar-3.0.0.tar.gz
+ cd lunar-calendar-3.0.0
+ ./configure --prefix=/usr
+ make
+ sudo make install
+
+要安装Gtk2版本，应该下载lunar-calendar-2.4.1。也可以同时安装2.4.1和3.0.0版本，这两个版本并不冲突。
+
+ArchLinux用户安装：
+---------------------
+
+ yaourt lunar-calendar
+
+运行截图：
+-----------
+
+image:images/lunar-calendar.png[程序截图]
+
+语言绑定测试代码：
+------------------
+
+Gjs测试代码:
+[source,javascript]
+----------------------------
+#!/usr/bin/env gjs-console
+const Gettext = imports.gettext;
+const Gtk = imports.gi.Gtk;
+const LunarCalendar = imports.gi.LunarCalendar;
+
+function TestCalendar() {
+  this._init ();
+}
+
+TestCalendar.prototype = {
+  _init: function () {
+    this.window = new Gtk.Window ({title: "Lunar Calendar"});
+    this.window.connect("hide", Gtk.main_quit);
+    this.cal = new LunarCalendar.Calendar();
+    this.window.add(this.cal);
+    this.window.show_all ();
+  }
+}
+
+Gtk.init (0, null);
+var tc = new TestCalendar();
+Gtk.main ();
+------------------------
+
+Seed测试代码:
+[source,javascript]
+----------------------------
+#!/usr/bin/env seed
+const Gettext = imports.gettext;
+const Gtk = imports.gi.Gtk;
+const LunarCalendar = imports.gi.LunarCalendar;
+
+function TestCalendar() {
+  this._init ();
+}
+
+TestCalendar.prototype = {
+  _init: function () {
+    this.window = new Gtk.Window ({title: "Lunar Calendar"});
+    //this.window.connect("delete-event", Gtk.main_quit);
+    this.window.signal.hide.connect(function () { Gtk.main_quit(); });
+    this.cal = new LunarCalendar.Calendar();
+    this.window.add(this.cal);
+    this.window.show_all ();
+  }
+}
+
+Gtk.init (0, null);
+var tc = new TestCalendar();
+Gtk.main ();
+----------------------------
+
+Python测试代码：
+
+[source,python]
+----------------------------
+#! /usr/bin/env python2
+# -*- encoding:utf-8 -*-
+# FileName: python.py
+
+from gi.repository import Gtk as gtk
+from gi.repository import LunarCalendar as calendar
+
+def main_quit(object, *args):
+    gtk.main_quit()
+
+if __name__ == '__main__':
+    window = gtk.Window()
+    window.connect("hide", main_quit)
+
+    cal = calendar.Calendar()
+    window.add(cal)
+    window.show_all()
+    gtk.main()
+----------------------------
+
+javascript和python测试代码保存为可执行文件，即可运行。
+
+vala测试代码:
+[source,vala]
+----------------------------
+/*
+ * compilation:
+ * valac --pkg lunar-calendar-3.0 calendar.vala
+ *
+ * configure:
+ * $ ./configure --enable-vala-bindings ...
+ *
+ */
+
+using Gtk;
+using LunarCalendar;
+
+static int main (string[] args) {
+	Gtk.init (ref args);
+
+	var window = new Window (WindowType.TOPLEVEL);
+	window.title = "Lunar Calendar";
+	window.position = WindowPosition.CENTER;
+	window.destroy.connect (Gtk.main_quit);
+
+	var calendar = new LunarCalendar.Calendar ();
+	window.add (calendar);
+	window.show_all ();
+
+	Gtk.main ();
+	return 0;
+}
+----------------------------
+
+vala代码需要先使用 *valac --pkg lunar-calendar-3.0 calendar.vala* 来编译，然后再运行./calendar。
+
+目前我的电脑上，由于vala的gtk/gdk绑定存在问题，导致无法编译出lunar-calendar的vala绑定，所以无法正常测试。

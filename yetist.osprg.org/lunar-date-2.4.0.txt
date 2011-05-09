@@ -1,0 +1,123 @@
+lunar-date 2.4.0 发布
+======================
+
+lunar-date 是Linux上用于转换公农历的一个函数库，原来叫liblunar，为了更好地适应Gobject Introspection来支持多种语言绑定, 故改名为lunar-date。
+
+参考手册： http://liblunar.googlecode.com/svn/docs/lunar-date/index.html
+
+2.4.0版本修复了内存泄露Bug，并提供以下语言绑定：
+javascript，python, vala...
+
+从源码安装：
+------------
+
+ wget http://liblunar.googlecode.com/files/lunar-date-2.4.0.tar.gz
+ tar xf lunar-calendar-2.4.0.tar.gz
+ cd lunar-calendar-2.4.0
+ ./configure --prefix=/usr
+ make
+ sudo make install
+
+如果要使用其它语言绑定，应该使用 *./configure --prefix=/usr --enable-introspection=yes --enable-vala-bindings* 来编译。
+
+ArchLinux用户安装：
+---------------------
+
+ yaourt lunar-calendar
+
+语言绑定代码测试：
+--------------------
+
+Gjs测试代码:
+[source,javascript]
+----------------------------
+#!/usr/bin/env gjs-console
+const LunarDate = imports.gi.LunarDate;
+const Gettext = imports.gettext.domain('lunar-date');
+
+let l = new LunarDate.Date();
+l.set_solar_date(2010,4,2,18);
+//let out = l.strftime("%(NIAN)年%(YUE)月%(RI)日%(SHI)时"); 这行代码不工作啊。
+let out = l.strftime("%(NIAN)nian%(YUE)yue%(RI)ri%(SHI)shi");
+print(out);
+l.free();
+----------------------------
+
+Seed测试代码:
+[source,javascript]
+----------------------------
+#!/usr/bin/env seed
+Gettext = imports.gettext;
+LunarDate = imports.gi.LunarDate;
+
+Gettext.bindtextdomain("lunar-date", "/usr/share/locale");
+Gettext.textdomain("lunar-date");
+
+var l = new LunarDate.Date();
+l.set_solar_date(2010,4,2,18);
+//var out = l.strftime("%(NIAN)年%(YUE)月%(RI)日%(SHI)时");
+var out = l.strftime("%(NIAN)nian%(YUE)yue%(RI)ri%(SHI)shi");
+l.free();
+print(out);
+----------------------------
+
+
+Python测试代码：
+[source,python]
+----------------------------
+#!/usr/bin/python2
+# coding=utf-8
+from gi.repository import LunarDate
+import sys
+
+import locale
+locale.setlocale(locale.LC_ALL, "")
+
+def test_date():
+    l = LunarDate.Date()
+    l.set_solar_date(2010, 4, 2, 18)
+    format={"%(YEAR)年%(MONTH)月%(DAY)日%(HOUR)时":"%(YEAR)年%(MONTH)月%(DAY)日%(HOUR)时",
+            "%(year)年%(month)月%(day)日%(hour)时": "%(year)年%(month)月%(day)日%(hour)时",
+            "%(NIAN)年%(YUE)月%(RI)日%(SHI)时": "%(NIAN)年%(YUE)月%(RI)日%(SHI)时",
+            "%(nian)年%(yue)月%(ri)日%(shi)时": "%(nian)年%(yue)月%(ri)日%(shi)时",
+            "%(Y60)年%(M60)月%(D60)日%(H60)时": "%(Y60)年%(M60)月%(D60)日%(H60)时",
+            "%(Y8)年%(M8)月%(D8)日%(H8)时": "%(Y8)年%(M8)月%(D8)日%(H8)时",
+            "生肖属%(shengxiao)": "生肖属%(shengxiao)"}
+    for i in format.keys():
+        print i,"\t"*2, l.strftime(format[i])
+    l.free()
+
+test_date()
+----------------------------
+
+javascript和python测试代码保存为可执行文件，即可运行。
+
+vala测试代码:
+[source,vala]
+----------------------------
+/*
+ * compilation:
+ * valac --pkg lunar-date-2.0 lunardate.vala
+ *
+ * configure:
+ * $ ./configure --enable-vala-bindings ...
+ *
+ */
+
+using Lunar;
+
+static int main (string[] args) {
+	var t = new Lunar.Date();
+	try {
+		t.set_solar_date(2009, DateMonth.JULY, 1, 8 );
+	} catch (Error e) {
+		return 1;
+	}
+	stdout.printf("%s\n", t.strftime("%(YEAR)年%(YUE)月"));
+	return 0;
+}
+----------------------------
+
+vala代码需要先使用 *valac --pkg lunar-date-2.0 lunardate.vala* 来编译，然后再运行./lunardate。
+
+这几个测试代码中，javascript和vala代码不知道怎样使用当前locale，所以无法显示中文，谁知道的说一下。
