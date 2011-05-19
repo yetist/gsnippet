@@ -1,0 +1,86 @@
+#! /usr/bin/env python
+# -*- encoding:utf-8 -*-
+# FileName: json2xspf.py
+
+"This file is part of ____"
+ 
+__author__   = "yetist"
+__copyright__= "Copyright (C) 2011 yetist <xiaotian.wu@i-soft.com.cn>"
+__license__  = """
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+"""
+
+import json
+import os
+import sys
+
+def out_xspf(fp, songs):
+    head = """<?xml version="1.0" encoding="UTF-8"?>\n<playlist version="1" xmlns="http://xspf.org/ns/0/">\n"""
+    tail = """\t</trackList>\n</playlist>\n"""
+
+    fp.write(head)
+
+    if 'title' in songs:
+        line = "\t<title>%(title)s</title>\n\t<trackList>\n" % songs
+    fp.write(line)
+    if 'tracks' in songs:
+        meta = {}
+        tracks = songs['tracks']
+        line = "\t\t<track>\n"
+        if 'title' in tracks:
+            meta['title'] = tracks.pop('title')
+            line = line + "\t\t\t<trackNum>%(num)s</trackNum>\n"
+            line = line + "\t\t\t<title>%(title)s-%(num)s</title>\n"
+        else:
+            meta['title'] = ''
+            line = line + "\t\t\t<title>%(num)s</title>\n"
+        if 'album' in tracks:
+            meta['album'] = tracks.pop('album')
+            line = line + "\t\t\t<album>%(album)s</album>\n"
+        if 'creator' in tracks:
+            meta['creator'] = tracks.pop('creator')
+            line = line + "\t\t\t<creator>%(creator)s</creator>\n"
+
+        l = list(tracks.keys())
+        l.sort()
+        for i in l:
+            meta['num'] = i
+            meta['location'] = tracks[i]
+            msg = line + "\t\t\t<location>%(location)s</location>\n\t\t</track>\n"
+            fp.write(msg % meta)
+    fp.write(tail)
+
+def main():
+
+    if len(sys.argv) == 3:
+        outpath = os.path.abspath(sys.argv[2])
+        ofp = open(outpath, "w+")
+    elif len(sys.argv) == 2:
+        ofp = sys.stdout
+    else:
+        print("usage:\n%s <JSON> [XSPF]\n" % sys.argv[0])
+
+    inpath = os.path.abspath(sys.argv[1])
+    fp = open(inpath)
+    songs = json.load(fp, encoding='utf-8')
+
+    out_xspf(ofp, songs)
+    fp.close()
+    if ofp != sys.stdout:
+        ofp.close()
+
+
+if __name__=="__main__":
+    main()
