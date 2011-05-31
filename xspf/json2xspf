@@ -44,8 +44,8 @@ def out_xspf(fp, songs):
             line = line + "\t\t\t<trackNum>%(num)s</trackNum>\n"
             line = line + "\t\t\t<title>%(title)s-%(num)s</title>\n"
         else:
-            meta['title'] = ''
             line = line + "\t\t\t<title>%(num)s</title>\n"
+            line = line + "\t\t\t<title>%(title)s</title>\n"
         if 'album' in tracks:
             meta['album'] = tracks.pop('album')
             line = line + "\t\t\t<album>%(album)s</album>\n"
@@ -56,7 +56,12 @@ def out_xspf(fp, songs):
         l = list(tracks.keys())
         l.sort()
         for i in l:
-            meta['num'] = i
+            if i.find(':') > 0:
+                meta['num'] = i.split(':')[0]
+                meta['title'] = i.split(':')[1]
+            else:
+                meta['num'] = i
+                meta['title'] = ''
             meta['location'] = tracks[i]
             msg = line + "\t\t\t<location>%(location)s</location>\n\t\t</track>\n"
             fp.write(msg % meta)
