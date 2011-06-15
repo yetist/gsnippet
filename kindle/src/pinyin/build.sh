@@ -20,7 +20,7 @@ download()
 			exit 0
 		fi
 	else
-		echo "please download the $ORIGNAME from $URL first"
+		echo "please download the $ORIGNAME from $URL, and put it in $BASEDIR"
 		exit 0
 	fi
 
@@ -90,3 +90,4 @@ clean()
 download
 unpack
 repack
+clean
