@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Runlevel: 2345 73 10
+# Description: Startup/shutdown script for the Kindle Pinyin.
+#
+# Copyright 2011 yetist <yetist@gmail.com>
+#
+
+_FUNCTIONS=/etc/rc.d/functions
+[ -f ${_FUNCTIONS} ] && . ${_FUNCTIONS}
+
+PINYIN_ENABLE_FUSE=/mnt/us/pinyin
+PINYIN_API=/mnt/us/pinyin/lib/framework-api.jar
+
+case "$1" in
+	start)
+		if [ -d ${PINYIN_ENABLE_FUSE} -a -f ${PINYIN_API} ]; then
+			if cat /proc/mounts |grep framework-api; then
+				msg "pinyin framework alreasy mounted"
+			else
+				export LD_LIBRARY_PATH=/mnt/us/pinyin/lib:$LD_LIBRARY_PATH
+				export PATH=$PATH:/mnt/us/pinyin/bin
+				mount --bind ${PINYIN_API} /opt/amazon/ebook/lib/framework-api.jar
+			fi
+		else
+			msg "[/mnt/us/pinyin not found] Pinyin input method disabled" I
+		fi
+		;;
+
+	stop)
+		#TODO, umount it after framework down.
+		msg " Pinyin input method stop called" W >&2
+		;;
+	*)
+		msg "Usage: $0 {start|stop}" W >&2
+		exit 1
+		;;
+esac
+
+exit 0
