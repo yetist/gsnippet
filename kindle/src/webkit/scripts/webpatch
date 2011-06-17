@@ -1,0 +1,60 @@
+#!/bin/sh
+#link this for to /etc/rc5.d/S93webpatch
+#link this for to /etc/rc3.d/K07webpatch
+
+PATH=/usr/sbin:/usr/bin:/sbin:/bin
+_FUNCTIONS=/etc/rc.d/functions
+[ -f ${_FUNCTIONS} ] && . ${_FUNCTIONS}
+
+NAME="webpatch"
+ORIG_LIB="/usr/lib/libwebkit-1.0.so.2.5.0"
+NEW_LIB="/mnt/us/webkit/libwebkit.so"
+ORIG_BIN="/usr/bin/browserd"
+NEW_BIN="/mnt/us/webkit/browserd"
+
+stop() {
+	# In here, stop means start
+	if mount|grep libwebkit; then
+		umount ${ORIG_LIB}
+	fi
+
+	if mount|grep browserd; then
+		umount ${ORIG_BIN}
+	fi
+}
+
+start() {
+	# First things first, check for an emergency script
+	if mount|grep libwebkit; then
+		echo "libwebkit already mounted"
+	else
+		[ -f ${NEW_LIB} ] && mount --bind ${NEW_LIB} ${ORIG_LIB}
+		echo "mount ${NEW_LIB}"
+	fi
+	# Next, mount the hacked browserd.
+	if mount|grep browserd; then
+		echo "browserd already mounted"
+	else
+		[ -f ${NEW_BIN} ] && mount --bind ${NEW_BIN} ${ORIG_BIN}
+		echo "mount ${NEW_BIN}"
+	fi
+}
+
+case "$1" in
+  start)
+	start
+  ;;
+  stop)
+	stop
+  ;;
+  restart|force-reload)
+	start
+	stop
+  ;;
+  *)
+	echo "Usage: /etc/init.d/$NAME {start|stop|restart|force-reload}" >&2
+	exit 1
+  ;;
+esac
+
+exit 0

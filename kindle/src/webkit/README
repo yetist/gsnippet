@@ -1,0 +1,15 @@
+此补丁包对Kindle 3的浏览器进行Hack, 以提供以下功能：
+
+1. 将新窗口在原来的窗口中打开(hacked by ctc)。
+2. 增加下载.pdf和.epub两种文件格式。
+
+本软件已经包括了ctc的webpatch补丁，见 http://hi.baidu.com/44670
+
+！！重要！！
+
+本补丁包不会修改系统中原有文件，如果安装之后发现浏览器不能工作，请卸载，方法：
+在Kindle/webkit目录中的remove文件覆盖webpatch文件，然后重启即可。
+成功卸载之后，Kindle/webkit目录会多出一个文件uninstall.log。
+
+如果你的系统使用此补丁不能正常工作，但希望尽快使用此patch的话，
+可以将你的/mnt/us/webkit/backup目录及/mnt/usr/webkit/install.log文件打包压缩给我们，我们试试看能不能解决。
