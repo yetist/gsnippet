@@ -42,6 +42,7 @@ rm -f webkit.tar.gz
 
 mv update*bin ${OUTPUT}
 
+tar zcf webpatch-${VERSION}.tar.gz bin README
 7z a webpatch-${VERSION}.7z bin README
 echo Cleaning up
 rm -rf ${TEMP}
