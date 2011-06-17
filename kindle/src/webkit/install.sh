@@ -92,6 +92,8 @@ stop_browser()
 	fi
 }
 
+stop_browser
+
 update_progressbar 20
 
 tar webkit.tar.gz -C /mnt/us
