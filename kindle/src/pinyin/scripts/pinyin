@@ -28,7 +28,9 @@ case "$1" in
 		;;
 
 	stop)
-		#TODO, umount it after framework down.
+		if cat /proc/mounts |grep framework; then
+			umount /opt/amazon/ebook/lib/framework-api.jar
+		fi
 		msg " Pinyin input method stop called" W >&2
 		;;
 	*)

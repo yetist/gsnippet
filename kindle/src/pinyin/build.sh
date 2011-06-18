@@ -1,4 +1,9 @@
 #!/bin/sh
+
+HACKNAME="pinyin"
+PKGNAME="kindle-pinyin"
+PKGVER="0.3.0"
+
 BASEDIR="`dirname \"$0\"`"
 TMPDIR="$BASEDIR/tmp"
 
@@ -7,6 +12,8 @@ UPDATE_KINDLE="$BASEDIR/../bin/kindle_update_tool.py"
 URL="http://dl.dbank.com/c0ecr34fp4"
 ORIGNAME="pinyin_0.2.rar"
 ORIGMD5="b7659999130e7d35f29aa7b9956ede26"
+
+KINDLE_MODELS="k2 k2i dx dxi dxg k3g k3w k3gb"
 
 download()
 {
@@ -78,16 +85,44 @@ repack()
 	else
 		echo "scripts/pinyin lost"
 	fi
-	tar zcf pinyin.tar.gz pinyin
+	tar zcf ${HACKNAME}.tar.gz pinyin
+
+}
+
+mkupdate()
+{
+	if [ -f pinyin.tar.gz ];then
+		for model in ${KINDLE_MODELS} ; do
+			# Prepare our files for this specific kindle model...
+			ARCH=${PKGNAME}_${PKGVER}_${model}
+
+			# Build install update
+			$UPDATE_KINDLE m --${model} --sign ${ARCH}_install install.sh ${HACKNAME}.tar.gz
+
+			# Build uninstall update
+			$UPDATE_KINDLE  m --${model} --sign ${ARCH}_uninstall uninstall.sh
+		done
+	fi
+	# Remove custom directory archive
+	rm -f ${HACKNAME}.tar.gz
+
+	# Move our updates :)
+	if [ -d $BASEDIR/bin ];then
+		rm -rf $BASEDIR/bin
+	else
+		mkdir -p $BASEDIR/bin
+	fi
+	mv -f *.bin $BASEDIR/bin
 }
 
 clean()
 {
 	[ -d $TMPDIR ] && rm -rf $TMPDIR
-	[ -d pinyin ] && rm -rf pinyin
+	[ -d $BASEDIR/pinyin ] && rm -rf $BASEDIR/pinyin
 }
 
 download
 unpack
 repack
-clean
+mkupdate
+#clean

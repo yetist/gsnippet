@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-VERSION="0.2"
+VERSION="0.3"
 UPDATE_TOOL="../bin/kindle_update_tool.py"
 INSTALLER="install.sh"
 OUTPUT="./bin"
@@ -35,7 +35,7 @@ tar -zcvf webkit.tar.gz ${TEMP}
 
 KINDLE_MODELS="k3g k3w k3gb"
 for model in ${KINDLE_MODELS}; do
-	${UPDATE_TOOL} c --${model} webpatch_${VERSION}_${model}_install install.sh webkit.tar.gz
+	${UPDATE_TOOL} m --${model} --sign webpatch_${VERSION}_${model}_install install.sh webkit.tar.gz
 done
 
 rm -f webkit.tar.gz

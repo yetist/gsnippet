@@ -75,7 +75,6 @@ stop_browser()
 {
 	PID=`pidof browserd`
 	if [ ! -z "$PID" ]; then
-	else
 		if [ -x /etc/init.d/browserd ]; then
 			msg "Stopping $DESC" I
 			/etc/init.d/browserd stop
@@ -96,7 +95,7 @@ stop_browser
 
 update_progressbar 20
 
-tar webkit.tar.gz -C /mnt/us
+tar -zxf webkit.tar.gz -C /mnt/us
 
 update_progressbar 40
 
