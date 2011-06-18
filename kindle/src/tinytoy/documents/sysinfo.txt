@@ -1,0 +1,56 @@
+系统信息
+==========
+IP: 192.168.10.200
+
+launchpad
+===========
+Shift F B 	-- run FBReader
+Shift F R	-- run the fbKindle port of FBReader.
+Shift Shift Space -- reread hotkey sequence database
+Shift Shift I -- install custom updates
+Shift Shift S -- Sleep/show screensaver
+Shift Shift A -- restart Amazon Kindle framework
+Shift Shift C -- kick/continue mistakenly stopped Amazon Kindle framework
+Shift Shift R -- Reboot
+Shift Shift H -- Shutdown
+Shift Shift Shift  -- takes a screenshot and saves it as screenshot.bmp in the root user folder 
+
+fbKindle快捷键
+================
+Left & Right will navigate between tabs
+Next Page/Previous Page buttons will navigate through the options elements.
+Up or Down will change through list elements.
+Space will select/deselect a check box element
+alt/o or enter - Ok
+alt/c - Cancel
+alt/a - Apply
+
+Now for one of my favourite features of fbKindle:
+To change font size press + or - on the volume control
+
+List of key shortcuts:
+
+L = show Library
+O = Preferences Dialog (Options)
+Previous Page = Undo (previous element in dialog)
+Next Page = Redo (next element in dialog)
+C = TOC
+F = Text Search
+P = Find previous
+N = Find next
+Shift+Home = Go to Home (note: this doesn't work for me)
+Home = Go to beginning/cover
+D = toggle Indicator
+A = Add Book
+I = Book info
+R = Rotate screen
+Right = next TOC Section
+Left = previous TOC Section
+Alt/Back = Quit fbKindle
+Alt/Shift = Switch to Kindle Home/Switch back to fbKindle
+G = Go To Page
+Menu = open Pop up menu
+Enter = open Hyperlink
+Down = next Hyperlink
+Up = prev Hyperlink
+Space = refresh Screen (select/deselect check box in dialog)
