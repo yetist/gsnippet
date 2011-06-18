@@ -4,7 +4,7 @@ DOCPATH=/mnt/us/documents/sysinfo.txt
 
 refresh()
 {
-	dbus-send –system /default com.lab126.powerd.resuming int32:1
+	dbus-send --system /default com.lab126.powerd.resuming int32:1
 }
 
 removead()
