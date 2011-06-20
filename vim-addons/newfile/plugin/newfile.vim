@@ -60,7 +60,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 HEAD = {}
 TAIL = {}
 
-HEAD[".c"] = """/* vi: set sw=4 ts=4: */
+HEAD[".c"] = """/* vi: set sw=4 ts=4 wrap ai: */
 /*
  * [FILENAME]: [DESCRIPTION]
  *
@@ -69,7 +69,8 @@ HEAD[".c"] = """/* vi: set sw=4 ts=4: */
 [LICENSE]
  * */
 """
-TAIL[".c"]= """
+TAIL[".c"]= """"""
+"""
 /*
 vi:ts=4:wrap:ai:expandtab
 */
