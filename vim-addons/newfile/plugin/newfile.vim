@@ -76,7 +76,6 @@ vi:ts=4:wrap:ai:expandtab
 */
 """
 
-
 HEAD[".h"] = HEAD[".c"] + """
 #ifndef [_H_] 
 #define [_H_]  1
@@ -90,6 +89,22 @@ G_END_DECLS
 
 #endif /* [_H_] */
 """ + TAIL[".c"]
+
+HEAD[".m"] = """/* vi: set sw=4 ts=4 wrap ai: */
+/*
+ * [FILENAME]: [DESCRIPTION]
+ *
+ * [COPYRIGHT]
+ *
+[LICENSE]
+ * */
+"""
+TAIL[".m"]= """"""
+"""
+/*
+vi:ts=4:wrap:ai:expandtab
+*/
+"""
 
 HEAD[".py"] = """#! /usr/bin/env python
 # -*- encoding:utf-8 -*-
@@ -164,7 +179,7 @@ def newfile():
 
     c_gpl = "\n".join([" * " + i for i in GPL.splitlines()])
     vim_gpl = "\n".join(["\" " + i for i in GPL.splitlines()])
-    if info["extname"] == ".c" or info["extname"] == ".h":
+    if info["extname"] == ".c" or info["extname"] == ".h" or info["extname"] == ".m":
         info["license"] = c_gpl
     elif info["extname"] == ".vim":
         info["license"] = vim_gpl
