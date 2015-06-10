@@ -1,0 +1,1 @@
+collect some useful code for program based on glib/gtk+/gnome.
